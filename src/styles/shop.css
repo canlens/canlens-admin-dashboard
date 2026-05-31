@@ -2,6 +2,7 @@
 .shop-page {
   background-color: var(--color-background);
   min-height: 100vh;
+  padding: 100px 0;
 }
 
 .shop-hero {

@@ -69,9 +69,9 @@ export function Shop() {
   };
 
   return (
-    <div className="shop-page pt-20">
+    <div className="shop-page pt-100">
       {/* Hero Header */}
-      <section className="shop-hero py-16">
+      <section className="shop-hero">
         <div className="container-premium">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
