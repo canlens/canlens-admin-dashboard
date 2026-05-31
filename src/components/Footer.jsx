@@ -10,7 +10,7 @@ export function Footer() {
           {/* Brand */}
           <div className="footer-brand">
             <div className="footer-logo-group">
-              <Camera className="footer-logo-icon" />
+              <img src="/images/canlensLogo.png" alt="CanLens Studio" className="footer-logo" />
               <div>
                 <h3 className="footer-brand-title">CanLens Studio</h3>
                 <p className="footer-brand-subtitle">Kigali, Rwanda</p>

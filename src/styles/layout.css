@@ -8,6 +8,12 @@
   flex: 1;
 }
 
+.footer-logo{
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;}
+
 /* --- Navigation --- */
 .nav-header {
   position: fixed;
