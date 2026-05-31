@@ -245,7 +245,7 @@ export function Contact() {
           <Card className="glass-card contact-map-card">
             <div className="contact-map-container">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127641.83848145688!2d30.059306!3d-1.9440727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca4258ed8e797%3A0xe532b7b1d7d1f8de!2sKigali%2C%20Rwanda!5e0!3m2!1sen!2s!4v1234567890"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d996.8664101838018!2d30.1026782!3d-1.9677223!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca7005651cf5f%3A0xf2a0d696d6a9cfd9!2sCanLens%20Studio!5e0!3m2!1sen!2srw!4v1780247405530!5m2!1sen!2srw"
                 className="contact-map-iframe"
                 style={{ border: 0 }}
                 allowFullScreen
