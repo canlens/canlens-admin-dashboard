@@ -87,7 +87,7 @@
   cursor: pointer;
 }
 .shop-view-active {
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
 }
 .shop-view-inactive {
@@ -110,9 +110,9 @@
   color: rgba(255,255,255,0.6);
 }
 .shop-active-badge {
-  background-color: rgba(212, 175, 55, 0.2);
-  color: var(--canlens-gold);
-  border-color: rgba(212, 175, 55, 0.3);
+  background-color: rgba(63, 175, 248, 0.2);
+  color: var(--canlens-blue);
+  border-color: rgba(63, 175, 248, 0.3);
 }
 .shop-active-badge-remove {
   margin-left: 0.5rem;
@@ -191,8 +191,8 @@
   background-color: rgba(0,0,0,0.7);
 }
 .shop-wishlist-active {
-  fill: var(--canlens-gold);
-  color: var(--canlens-gold);
+  fill: var(--canlens-blue);
+  color: var(--canlens-blue);
 }
 
 .shop-product-content {
@@ -207,9 +207,9 @@
   margin-bottom: 0.5rem;
 }
 .shop-brand-badge {
-  background-color: rgba(212, 175, 55, 0.1);
-  color: var(--canlens-gold);
-  border-color: rgba(212, 175, 55, 0.2);
+  background-color: rgba(63, 175, 248, 0.1);
+  color: var(--canlens-blue);
+  border-color: rgba(63, 175, 248, 0.2);
 }
 .shop-product-rating {
   display: flex;
@@ -219,8 +219,8 @@
 .shop-star-icon {
   width: 1rem;
   height: 1rem;
-  color: var(--canlens-gold);
-  fill: var(--canlens-gold);
+  color: var(--canlens-blue);
+  fill: var(--canlens-blue);
 }
 .shop-rating-text {
   font-size: 0.875rem;
@@ -239,7 +239,7 @@
   height: 2.8rem;
 }
 .shop-product-card:hover .shop-product-title {
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
 }
 .shop-product-desc {
   font-size: 0.875rem;
@@ -263,11 +263,11 @@
   color: var(--color-white);
 }
 .shop-add-btn {
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
 }
 .shop-add-btn:hover {
-  background-color: var(--canlens-gold-light);
+  background-color: var(--canlens-blue-light);
 }
 .shop-btn-icon-mr {
   margin-right: 0.5rem;
@@ -333,13 +333,13 @@
   transition: color 0.2s;
 }
 .shop-list-card:hover .shop-list-title {
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
 }
 .shop-star-icon-lg {
   width: 1.25rem;
   height: 1.25rem;
-  color: var(--canlens-gold);
-  fill: var(--canlens-gold);
+  color: var(--canlens-blue);
+  fill: var(--canlens-blue);
 }
 .shop-rating-text-lg {
   color: rgba(255,255,255,0.7);

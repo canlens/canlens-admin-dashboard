@@ -20,7 +20,7 @@
 }
 .btn:focus-visible {
   border-color: var(--color-ring);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 0 3px rgba(63, 175, 248, 0.5);
 }
 
 /* Button Variants */
@@ -190,7 +190,7 @@
 }
 .input:focus-visible {
   border-color: var(--color-ring);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 0 3px rgba(63, 175, 248, 0.5);
 }
 .input::placeholder {
   color: var(--color-muted-foreground);
@@ -219,7 +219,7 @@
 }
 .textarea:focus-visible {
   border-color: var(--color-ring);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 0 3px rgba(63, 175, 248, 0.5);
 }
 .textarea::placeholder {
   color: var(--color-muted-foreground);
@@ -262,7 +262,7 @@
 }
 .select-trigger:focus-visible {
   border-color: var(--color-ring);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 0 3px rgba(63, 175, 248, 0.5);
 }
 .select-trigger:disabled {
   opacity: 0.5;

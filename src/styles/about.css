@@ -82,13 +82,13 @@
   width: 4rem;
   height: 4rem;
   border-radius: 9999px;
-  background-color: rgba(212, 175, 55, 0.1);
+  background-color: rgba(63, 175, 248, 0.1);
   margin-bottom: 1.5rem;
 }
 .about-mission-icon {
   width: 2rem;
   height: 2rem;
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
 }
 .about-mission-title {
   color: var(--color-white);
@@ -118,7 +118,7 @@
 .about-value-icon {
   width: 3rem;
   height: 3rem;
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
   margin: 0 auto 1rem;
 }
 .about-value-title {
@@ -176,7 +176,7 @@
   margin-bottom: 0.25rem;
 }
 .about-team-role {
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
   font-size: 0.875rem;
   margin-bottom: 0.75rem;
 }

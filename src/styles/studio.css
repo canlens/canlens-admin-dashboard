@@ -93,7 +93,7 @@
   gap: 0.5rem;
 }
 .studio-price-badge {
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
   font-size: 1.125rem;
   padding: 0.5rem 1rem;
@@ -129,18 +129,18 @@
 .studio-check-icon {
   width: 1rem;
   height: 1rem;
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
   flex-shrink: 0;
 }
 .studio-book-btn {
   width: 100%;
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
   height: 3rem;
   font-size: 1rem;
 }
 .studio-book-btn:hover {
-  background-color: var(--canlens-gold-light);
+  background-color: var(--canlens-blue-light);
 }
 .studio-btn-icon {
   margin-right: 0.5rem;
@@ -232,7 +232,7 @@
 .studio-total-value {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
 }
 .studio-form-actions {
   display: flex;
@@ -249,9 +249,9 @@
 }
 .studio-btn-confirm {
   flex: 1;
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
 }
 .studio-btn-confirm:hover {
-  background-color: var(--canlens-gold-light);
+  background-color: var(--canlens-blue-light);
 }

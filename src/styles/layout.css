@@ -61,7 +61,7 @@
 .nav-logo-glow {
   position: absolute;
   inset: 0;
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   filter: blur(12px);
   opacity: 0;
   transition: opacity 0.3s;
@@ -126,7 +126,7 @@
   left: 0;
   right: 0;
   height: 0.125rem;
-  background: linear-gradient(to right, var(--canlens-gold), var(--canlens-gold-light));
+  background: linear-gradient(to right, var(--canlens-blue), var(--canlens-blue-light));
 }
 
 .nav-actions {
@@ -138,7 +138,7 @@
   color: var(--color-white);
 }
 .nav-action-btn:hover {
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
   background-color: rgba(255, 255, 255, 0.05);
 }
 .nav-badge {
@@ -147,7 +147,7 @@
   right: -0.25rem;
   width: 1.25rem;
   height: 1.25rem;
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
   font-size: 0.75rem;
   border-radius: 9999px;
@@ -207,7 +207,7 @@
   transition: color 0.2s;
 }
 .mobile-nav-link-active {
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
   font-weight: 500;
 }
 .mobile-nav-link-inactive {
@@ -263,7 +263,7 @@
 .footer-logo-icon {
   width: 2rem;
   height: 2rem;
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
 }
 .footer-brand-title {
   font-weight: 700;
@@ -290,7 +290,7 @@
   transition: color 0.2s;
 }
 .footer-social-link:hover {
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
 }
 .footer-heading {
   font-weight: 600;

@@ -238,7 +238,7 @@ export function Home() {
                 className="stat-item"
               >
                 <stat.icon className="stat-icon" />
-                <div className="stat-value gradient-text-gold">
+                <div className="stat-value gradient-text-blue">
                   {stat.value}
                 </div>
                 <p className="stat-label">{stat.label}</p>

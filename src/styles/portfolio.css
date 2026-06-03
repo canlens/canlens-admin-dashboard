@@ -29,11 +29,11 @@
   margin-bottom: 3rem;
 }
 .portfolio-btn-active {
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
 }
 .portfolio-btn-active:hover {
-  background-color: var(--canlens-gold-light);
+  background-color: var(--canlens-blue-light);
 }
 .portfolio-btn-inactive {
   border-color: rgba(255,255,255,0.1);
@@ -89,7 +89,7 @@
   opacity: 1;
 }
 .portfolio-badge {
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
   margin-bottom: 0.5rem;
 }
@@ -107,5 +107,5 @@
   transition: color 0.2s;
 }
 .portfolio-card:hover .portfolio-title {
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
 }

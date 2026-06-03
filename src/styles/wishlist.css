@@ -27,11 +27,11 @@
   margin-bottom: 2rem;
 }
 .wishlist-browse-btn {
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
 }
 .wishlist-browse-btn:hover {
-  background-color: var(--canlens-gold-light);
+  background-color: var(--canlens-blue-light);
 }
 
 .wishlist-hero {
@@ -102,9 +102,9 @@
   flex: 1;
 }
 .wishlist-brand-badge {
-  background-color: rgba(212, 175, 55, 0.1);
-  color: var(--canlens-gold);
-  border-color: rgba(212, 175, 55, 0.2);
+  background-color: rgba(63, 175, 248, 0.1);
+  color: var(--canlens-blue);
+  border-color: rgba(63, 175, 248, 0.2);
   margin-bottom: 0.5rem;
   width: fit-content;
 }
@@ -119,7 +119,7 @@
   overflow: hidden;
 }
 .wishlist-card:hover .wishlist-product-title {
-  color: var(--canlens-gold);
+  color: var(--canlens-blue);
 }
 .wishlist-product-desc {
   font-size: 0.875rem;
@@ -142,11 +142,11 @@
   color: var(--color-white);
 }
 .wishlist-add-btn {
-  background-color: var(--canlens-gold);
+  background-color: var(--canlens-blue);
   color: #000;
 }
 .wishlist-add-btn:hover {
-  background-color: var(--canlens-gold-light);
+  background-color: var(--canlens-blue-light);
 }
 
 .wishlist-continue-wrapper {

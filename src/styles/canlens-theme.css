@@ -2,20 +2,21 @@
 
 :root {
   /* Premium Black & White Palette */
-  --canlens-black: #000000;
-  --canlens-near-black: #0a0a0a;
-  --canlens-dark-gray: #1a1a1a;
-  --canlens-medium-gray: #2a2a2a;
-  --canlens-light-gray: #404040;
-  --canlens-silver: #7a7a7a;
+  --canlens-black: #010102;
+  --canlens-near-black: #0F1115;
+  --canlens-dark-gray: #171A20;
+  --canlens-medium-gray: #271C33;
+  --canlens-light-gray: #525C7F;
+  --canlens-silver: #B8C4D0;
   --canlens-light-silver: #b0b0b0;
   --canlens-off-white: #e5e5e5;
   --canlens-white: #ffffff;
   
   /* Accent Colors */
-  --canlens-gold: #d4af37;
-  --canlens-gold-light: #e8c968;
-  --canlens-gold-dark: #b8941f;
+  --canlens-blue: #3FAFF8;
+  --canlens-blue-light: #7FC7FF;
+  --canlens-blue-dark: #525C7F;
+  --canlens-pink: #F048B0;
   
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.05);
@@ -46,21 +47,21 @@
 
 /* Override theme.css for dark-first design */
 .dark-theme {
-  --background: var(--canlens-near-black);
+  --background: var(--canlens-black);
   --foreground: var(--canlens-white);
   --card: var(--canlens-dark-gray);
   --card-foreground: var(--canlens-white);
   --primary: var(--canlens-white);
   --primary-foreground: var(--canlens-black);
-  --secondary: var(--canlens-medium-gray);
+  --secondary: var(--canlens-near-black);
   --secondary-foreground: var(--canlens-white);
-  --muted: var(--canlens-light-gray);
+  --muted: var(--canlens-dark-gray);
   --muted-foreground: var(--canlens-silver);
-  --accent: var(--canlens-gold);
-  --accent-foreground: var(--canlens-black);
+  --accent: var(--canlens-blue);
+  --accent-foreground: var(--canlens-white);
   --border: var(--canlens-light-gray);
-  --input: var(--canlens-medium-gray);
-  --ring: var(--canlens-gold);
+  --input: var(--canlens-near-black);
+  --ring: var(--canlens-blue);
 }
 
 /* Premium Typography Scale */
@@ -159,8 +160,8 @@
   -webkit-text-fill-color: transparent;
 }
 
-.gradient-text-gold {
-  background: linear-gradient(135deg, var(--canlens-gold-light) 0%, var(--canlens-gold) 50%, var(--canlens-gold-dark) 100%);
+.gradient-text-blue {
+  background: linear-gradient(135deg, var(--canlens-blue) 0%, var(--canlens-blue-light) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -204,8 +205,8 @@ html {
 
 /* Selection */
 ::selection {
-  background: var(--canlens-gold);
-  color: var(--canlens-black);
+  background: var(--canlens-blue);
+  color: var(--canlens-white);
 }
 
 /* Container */
