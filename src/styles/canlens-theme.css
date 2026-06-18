@@ -1,0 +1,227 @@
+/* CanLens Studio Premium Dark Theme */
+
+:root {
+  /* Premium Black & White Palette */
+  --canlens-black: #010102;
+  --canlens-near-black: #0F1115;
+  --canlens-dark-gray: #171A20;
+  --canlens-medium-gray: #271C33;
+  --canlens-light-gray: #525C7F;
+  --canlens-silver: #B8C4D0;
+  --canlens-light-silver: #b0b0b0;
+  --canlens-off-white: #e5e5e5;
+  --canlens-white: #ffffff;
+  
+  /* Accent Colors */
+  --canlens-blue: #3FAFF8;
+  --canlens-blue-light: #7FC7FF;
+  --canlens-blue-dark: #525C7F;
+  --canlens-pink: #F048B0;
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(10px);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  
+  /* Typography */
+  --font-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
+  /* Spacing */
+  --section-padding: 8rem;
+  --container-max: 1400px;
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Override theme.css for dark-first design */
+.dark-theme {
+  --background: var(--canlens-black);
+  --foreground: var(--canlens-white);
+  --card: var(--canlens-dark-gray);
+  --card-foreground: var(--canlens-white);
+  --primary: var(--canlens-white);
+  --primary-foreground: var(--canlens-black);
+  --secondary: var(--canlens-near-black);
+  --secondary-foreground: var(--canlens-white);
+  --muted: var(--canlens-dark-gray);
+  --muted-foreground: var(--canlens-silver);
+  --accent: var(--canlens-blue);
+  --accent-foreground: var(--canlens-white);
+  --border: var(--canlens-light-gray);
+  --input: var(--canlens-near-black);
+  --ring: var(--canlens-blue);
+}
+
+/* Premium Typography Scale */
+.text-display-large {
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-display {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-hero {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.text-heading-1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.text-heading-2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.text-body-large {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Glassmorphism Effects */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: rgba(26, 26, 26, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Premium Button Styles */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width var(--transition-smooth), height var(--transition-smooth);
+}
+
+.btn-premium:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--canlens-white) 0%, var(--canlens-silver) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, var(--canlens-blue) 0%, var(--canlens-blue-light) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Premium Card Hover */
+.premium-card {
+  transition: all var(--transition-base);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.premium-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-2xl);
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--canlens-near-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--canlens-light-gray);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--canlens-silver);
+}
+
+/* Selection */
+::selection {
+  background: var(--canlens-blue);
+  color: var(--canlens-white);
+}
+
+/* Container */
+.container-premium {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .container-premium {
+    padding: 0 1.5rem;
+  }
+  
+  :root {
+    --section-padding: 4rem;
+  }
+}

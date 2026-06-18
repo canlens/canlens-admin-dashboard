@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -35,5 +36,6 @@ export default function App() {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
+
   );
 }
