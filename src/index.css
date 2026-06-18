@@ -1,0 +1,9 @@
+/* CanLens Admin — Master CSS Entry Point */
+@import './styles/variables.css';
+@import './styles/global.css';
+@import './styles/layout.css';
+@import './styles/login.css';
+@import './styles/dashboard.css';
+@import './styles/table.css';
+@import './styles/products.css';
+@import './styles/modal.css';

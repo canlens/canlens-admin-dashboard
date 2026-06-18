@@ -1,0 +1,310 @@
+/* ============================================================
+   CanLens Admin — Dashboard Page
+   ============================================================ */
+
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* ── Stat Cards Grid ── */
+.stat-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.stat-card {
+  position: relative;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0ms; }
+.stat-card:nth-child(2) { animation-delay: 60ms; }
+.stat-card:nth-child(3) { animation-delay: 120ms; }
+.stat-card:nth-child(4) { animation-delay: 180ms; }
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.stat-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-card-icon--blue {
+  background: var(--color-primary-dim);
+  color: var(--color-primary);
+  border: 1px solid rgba(63, 175, 248, 0.2);
+}
+
+.stat-card-icon--purple {
+  background: rgba(139, 92, 246, 0.12);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.stat-card-icon--green {
+  background: var(--color-success-dim);
+  color: var(--color-success);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.stat-card-icon--orange {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--color-warning);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.stat-card-trend {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.stat-card-trend--up {
+  background: var(--color-success-dim);
+  color: var(--color-success);
+}
+
+.stat-card-trend--down {
+  background: var(--color-error-dim);
+  color: var(--color-error);
+}
+
+.stat-card-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-card-label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* Colored top border per variant */
+.stat-card--blue  { border-top: 2px solid var(--color-primary); }
+.stat-card--purple { border-top: 2px solid #8B5CF6; }
+.stat-card--green  { border-top: 2px solid var(--color-success); }
+.stat-card--orange { border-top: 2px solid var(--color-warning); }
+
+.stat-card-glow {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.stat-card--blue .stat-card-glow   { background: var(--color-primary); }
+.stat-card--purple .stat-card-glow { background: #8B5CF6; }
+.stat-card--green .stat-card-glow  { background: var(--color-success); }
+.stat-card--orange .stat-card-glow { background: var(--color-warning); }
+
+/* ── Dashboard Sections ── */
+.dashboard-section {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  animation: fadeInUp 0.4s ease-out 0.2s both;
+}
+
+.dashboard-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dashboard-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.dashboard-see-all {
+  font-size: 13px;
+  color: var(--color-primary);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.dashboard-see-all:hover {
+  color: var(--color-primary-hover);
+}
+
+.dashboard-empty {
+  text-align: center;
+  padding: 32px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.link {
+  color: var(--color-primary);
+}
+.link:hover { color: var(--color-primary-hover); }
+
+/* ── Recent Products ── */
+.recent-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.recent-product-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  animation: fadeInUp 0.3s ease-out both;
+}
+
+.recent-product-card:hover {
+  border-color: rgba(255,255,255,0.1);
+  background: var(--color-card-hover);
+}
+
+.recent-product-img {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.recent-product-img-placeholder {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--color-card);
+  border: 1px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.recent-product-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.recent-product-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-product-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.recent-product-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.recent-product-featured {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Categories Grid ── */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.category-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: all var(--transition-fast);
+}
+
+.category-card:hover {
+  border-color: var(--color-border-active);
+  background: var(--color-primary-dim);
+}
+
+.category-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.category-card-count {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* ── Responsive (Mobile First) ── */
+@media (min-width: 601px) {
+  .stat-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stat-card-value {
+    font-size: 36px;
+  }
+  .dashboard-section {
+    padding: 24px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .dashboard-page {
+    gap: 32px;
+  }
+  .stat-cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
