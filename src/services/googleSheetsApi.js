@@ -136,32 +136,63 @@ export async function deleteProduct(id) {
 }
 
 // ──────────────────────────────────────────────────────────
-// Affiliate Products
+// Global Products
 // ──────────────────────────────────────────────────────────
 
-export async function getAffiliateProducts() {
-  const data = await gasGet('affiliate-products');
+export async function getGlobalProducts() {
+  const data = await gasGet('global-products');
   return data.data || [];
 }
 
-export async function getAffiliateProduct(id) {
-  const data = await gasGet('affiliate-products', { id });
+export async function getGlobalProduct(id) {
+  const data = await gasGet('global-products', { id });
   return data.data;
 }
 
-export async function createAffiliateProduct(product) {
+export async function createGlobalProduct(product) {
   const token = getToken();
-  const data = await gasPost({ action: 'createAffiliateProduct', token, ...product });
+  const data = await gasPost({ action: 'createGlobalProduct', token, ...product });
   return data.data;
 }
 
-export async function updateAffiliateProduct(product) {
+export async function updateGlobalProduct(product) {
   const token = getToken();
-  const data = await gasPost({ action: 'updateAffiliateProduct', token, ...product });
+  const data = await gasPost({ action: 'updateGlobalProduct', token, ...product });
   return data.data;
 }
 
-export async function deleteAffiliateProduct(id) {
+export async function deleteGlobalProduct(id) {
   const token = getToken();
-  await gasPost({ action: 'deleteAffiliateProduct', token, id });
+  await gasPost({ action: 'deleteGlobalProduct', token, id });
+}
+
+// ──────────────────────────────────────────────────────────
+// Portfolio
+// ──────────────────────────────────────────────────────────
+
+export async function getPortfolioItems() {
+  const data = await gasGet('portfolio');
+  return data.data || [];
+}
+
+export async function getPortfolioItem(id) {
+  const data = await gasGet('portfolio', { id });
+  return data.data;
+}
+
+export async function createPortfolioItem(item) {
+  const token = getToken();
+  const data = await gasPost({ action: 'createPortfolioItem', token, ...item });
+  return data.data;
+}
+
+export async function updatePortfolioItem(item) {
+  const token = getToken();
+  const data = await gasPost({ action: 'updatePortfolioItem', token, ...item });
+  return data.data;
+}
+
+export async function deletePortfolioItem(id) {
+  const token = getToken();
+  await gasPost({ action: 'deletePortfolioItem', token, id });
 }

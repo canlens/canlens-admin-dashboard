@@ -1,25 +1,27 @@
 import { useState, useMemo } from 'react';
-import { useAffiliateProducts } from '../hooks/useAffiliateProducts.js';
+import { useTranslation } from 'react-i18next';
+import { usePortfolio } from '../hooks/usePortfolio.js';
 import { PAGE_SIZE } from '../config.js';
-import AffiliateProductTable from '../components/ui/AffiliateProductTable.jsx';
-import AffiliateProductModal from '../components/ui/AffiliateProductModal.jsx';
+import PortfolioTable from '../components/ui/PortfolioTable.jsx';
+import PortfolioModal from '../components/ui/PortfolioModal.jsx';
 import ConfirmDialog from '../components/ui/ConfirmDialog.jsx';
 import SearchBar from '../components/ui/SearchBar.jsx';
 import Pagination from '../components/ui/Pagination.jsx';
 import ErrorState from '../components/ui/ErrorState.jsx';
 import EmptyState from '../components/ui/EmptyState.jsx';
 
-export default function AffiliateProductsPage() {
-  const { products, isLoading, error, refetch, addProduct, editProduct, removeProduct } = useAffiliateProducts();
+export default function PortfolioPage() {
+  const { items, isLoading, error, refetch, addItem, editItem, removeItem } = usePortfolio();
+  const { t } = useTranslation();
 
   // Search & Filter
   const [search, setSearch] = useState('');
-  const [storeFilter, setStoreFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [editingItem, setEditingItem] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
@@ -36,28 +38,28 @@ export default function AffiliateProductsPage() {
     setTimeout(() => setToast(null), 3500);
   }
 
-  // Derived: unique stores
-  const stores = useMemo(() => {
-    return [...new Set(products.map((p) => p.storeName).filter(Boolean))].sort();
-  }, [products]);
+  // Derived: unique categories
+  const categories = useMemo(() => {
+    return [...new Set(items.map((p) => p.category).filter(Boolean))].sort();
+  }, [items]);
 
-  // Filtered + searched products
+  // Filtered + searched items
   const filtered = useMemo(() => {
-    let result = products;
+    let result = items;
     if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(
         (p) =>
-          p.name?.toLowerCase().includes(q) ||
-          p.storeName?.toLowerCase().includes(q) ||
+          p.title?.toLowerCase().includes(q) ||
+          p.category?.toLowerCase().includes(q) ||
           p.description?.toLowerCase().includes(q)
       );
     }
-    if (storeFilter) {
-      result = result.filter((p) => p.storeName === storeFilter);
+    if (categoryFilter) {
+      result = result.filter((p) => p.category === categoryFilter);
     }
     return result;
-  }, [products, search, storeFilter]);
+  }, [items, search, categoryFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
@@ -66,25 +68,25 @@ export default function AffiliateProductsPage() {
     setSearch(val);
     setCurrentPage(1);
   }
-  function handleStoreChange(val) {
-    setStoreFilter(val);
+  function handleCategoryChange(val) {
+    setCategoryFilter(val);
     setCurrentPage(1);
   }
 
   // Modal handlers
   function openAddModal() {
-    setEditingProduct(null);
+    setEditingItem(null);
     setSaveError(null);
     setModalOpen(true);
   }
-  function openEditModal(product) {
-    setEditingProduct(product);
+  function openEditModal(item) {
+    setEditingItem(item);
     setSaveError(null);
     setModalOpen(true);
   }
   function closeModal() {
     setModalOpen(false);
-    setEditingProduct(null);
+    setEditingItem(null);
     setSaveError(null);
   }
 
@@ -92,12 +94,12 @@ export default function AffiliateProductsPage() {
     setIsSaving(true);
     setSaveError(null);
     try {
-      if (editingProduct) {
-        await editProduct(formData);
-        showToast('Affiliate Product updated successfully');
+      if (editingItem) {
+        await editItem(formData);
+        showToast(t('common.success'));
       } else {
-        await addProduct(formData);
-        showToast('Affiliate Product added successfully');
+        await addItem(formData);
+        showToast(t('common.success'));
       }
       closeModal();
     } catch (err) {
@@ -108,8 +110,8 @@ export default function AffiliateProductsPage() {
   }
 
   // Delete handlers
-  function handleDeleteClick(product) {
-    setDeleteTarget(product);
+  function handleDeleteClick(item) {
+    setDeleteTarget(item);
     setDeleteError(null);
   }
 
@@ -117,8 +119,8 @@ export default function AffiliateProductsPage() {
     setIsDeleting(true);
     setDeleteError(null);
     try {
-      await removeProduct(deleteTarget.id);
-      showToast('Affiliate Product deleted');
+      await removeItem(deleteTarget.id);
+      showToast(t('common.success'));
       setDeleteTarget(null);
       if (paginated.length === 1 && currentPage > 1) {
         setCurrentPage((p) => p - 1);
@@ -130,105 +132,91 @@ export default function AffiliateProductsPage() {
     }
   }
 
-  if (error) return <ErrorState title="Failed to load affiliate products" message={error} onRetry={refetch} />;
+  if (error) return <ErrorState title={t('common.error')} message={error} onRetry={refetch} />;
 
   return (
     <div className="products-page">
-      {/* Toast */}
       {toast && (
         <div className={`toast toast--${toast.type}`} role="status">
           {toast.type === 'success' ? '✓' : '✕'} {toast.message}
         </div>
       )}
 
-      {/* Page header */}
       <div className="page-header">
         <div>
           <p className="page-header-count">
-            {isLoading ? '…' : `${filtered.length} product${filtered.length !== 1 ? 's' : ''}`}
-            {(search || storeFilter) && ' (filtered)'}
+            {isLoading ? '…' : `${filtered.length}`}
           </p>
         </div>
         <button
           className="btn btn--primary"
           onClick={openAddModal}
-          id="add-product-btn"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
-          Add Affiliate Product
+          Add Item
         </button>
       </div>
 
-      {/* Search & filter */}
       <SearchBar
         search={search}
         onSearch={handleSearchChange}
-        category={storeFilter}
-        onCategory={handleStoreChange}
-        categories={stores}
+        category={categoryFilter}
+        onCategory={handleCategoryChange}
+        categories={categories}
       />
 
-      {/* Error from save */}
       {saveError && (
         <div className="alert alert--error">
-          <strong>Error:</strong> {saveError}
+          <strong>{t('common.error')}:</strong> {saveError}
         </div>
       )}
 
-      {/* Table / Empty */}
       {!isLoading && filtered.length === 0 ? (
         <EmptyState
-          title={search || storeFilter ? 'No affiliate products match your filters' : 'No affiliate products yet'}
-          description={
-            search || storeFilter
-              ? 'Try adjusting your search or filter.'
-              : 'Get started by adding your first affiliate product to the catalog.'
-          }
+          title={search || categoryFilter ? 'No items found' : 'No items yet'}
+          description=""
           action={
-            !search && !storeFilter ? (
+            !search && !categoryFilter ? (
               <button className="btn btn--primary" onClick={openAddModal}>
-                Add First Affiliate Product
+                Add Item
               </button>
             ) : (
-              <button className="btn btn--ghost" onClick={() => { handleSearchChange(''); handleStoreChange(''); }}>
+              <button className="btn btn--ghost" onClick={() => { handleSearchChange(''); handleCategoryChange(''); }}>
                 Clear Filters
               </button>
             )
           }
         />
       ) : (
-        <AffiliateProductTable
-          products={paginated}
+        <PortfolioTable
+          items={paginated}
           isLoading={isLoading}
           onEdit={openEditModal}
           onDelete={handleDeleteClick}
         />
       )}
 
-      {/* Pagination */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
 
-      {/* Add/Edit Modal */}
-      <AffiliateProductModal
+      <PortfolioModal
         isOpen={modalOpen}
-        product={editingProduct}
+        item={editingItem}
         onSave={handleSave}
         onClose={closeModal}
         isSaving={isSaving}
       />
 
-      {/* Delete Confirmation */}
       <ConfirmDialog
         isOpen={Boolean(deleteTarget)}
-        title="Delete Affiliate Product"
-        message={`Are you sure you want to delete "${deleteTarget?.name}"? This action cannot be undone.`}
+        title={t('common.delete')}
+        message={t('common.confirmDelete')}
         onConfirm={handleDeleteConfirm}
         onCancel={() => setDeleteTarget(null)}
         isLoading={isDeleting}

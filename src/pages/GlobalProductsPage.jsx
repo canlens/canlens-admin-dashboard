@@ -1,22 +1,20 @@
 import { useState, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useProducts } from '../hooks/useProducts.js';
+import { useGlobalProducts } from '../hooks/useGlobalProducts.js';
 import { PAGE_SIZE } from '../config.js';
-import ProductTable from '../components/ui/ProductTable.jsx';
-import ProductModal from '../components/ui/ProductModal.jsx';
+import GlobalProductTable from '../components/ui/GlobalProductTable.jsx';
+import GlobalProductModal from '../components/ui/GlobalProductModal.jsx';
 import ConfirmDialog from '../components/ui/ConfirmDialog.jsx';
 import SearchBar from '../components/ui/SearchBar.jsx';
 import Pagination from '../components/ui/Pagination.jsx';
 import ErrorState from '../components/ui/ErrorState.jsx';
 import EmptyState from '../components/ui/EmptyState.jsx';
 
-export default function ProductsPage() {
-  const { products, isLoading, error, refetch, addProduct, editProduct, removeProduct } = useProducts();
-  const { t } = useTranslation();
+export default function GlobalProductsPage() {
+  const { products, isLoading, error, refetch, addProduct, editProduct, removeProduct } = useGlobalProducts();
 
   // Search & Filter
   const [search, setSearch] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
+  const [storeFilter, setStoreFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Modal state
@@ -38,9 +36,9 @@ export default function ProductsPage() {
     setTimeout(() => setToast(null), 3500);
   }
 
-  // Derived: unique categories
-  const categories = useMemo(() => {
-    return [...new Set(products.map((p) => p.category).filter(Boolean))].sort();
+  // Derived: unique stores
+  const stores = useMemo(() => {
+    return [...new Set(products.map((p) => p.storeName).filter(Boolean))].sort();
   }, [products]);
 
   // Filtered + searched products
@@ -51,15 +49,15 @@ export default function ProductsPage() {
       result = result.filter(
         (p) =>
           p.name?.toLowerCase().includes(q) ||
-          p.category?.toLowerCase().includes(q) ||
+          p.storeName?.toLowerCase().includes(q) ||
           p.description?.toLowerCase().includes(q)
       );
     }
-    if (categoryFilter) {
-      result = result.filter((p) => p.category === categoryFilter);
+    if (storeFilter) {
+      result = result.filter((p) => p.storeName === storeFilter);
     }
     return result;
-  }, [products, search, categoryFilter]);
+  }, [products, search, storeFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
@@ -68,8 +66,8 @@ export default function ProductsPage() {
     setSearch(val);
     setCurrentPage(1);
   }
-  function handleCategoryChange(val) {
-    setCategoryFilter(val);
+  function handleStoreChange(val) {
+    setStoreFilter(val);
     setCurrentPage(1);
   }
 
@@ -96,10 +94,10 @@ export default function ProductsPage() {
     try {
       if (editingProduct) {
         await editProduct(formData);
-        showToast(t('common.success'));
+        showToast('Global Product updated successfully');
       } else {
         await addProduct(formData);
-        showToast(t('common.success'));
+        showToast('Global Product added successfully');
       }
       closeModal();
     } catch (err) {
@@ -120,9 +118,8 @@ export default function ProductsPage() {
     setDeleteError(null);
     try {
       await removeProduct(deleteTarget.id);
-      showToast(t('common.success'));
+      showToast('Global Product deleted');
       setDeleteTarget(null);
-      // Adjust page if we deleted the last item on it
       if (paginated.length === 1 && currentPage > 1) {
         setCurrentPage((p) => p - 1);
       }
@@ -133,7 +130,7 @@ export default function ProductsPage() {
     }
   }
 
-  if (error) return <ErrorState title={t('common.error')} message={error} onRetry={refetch} />;
+  if (error) return <ErrorState title="Failed to load global products" message={error} onRetry={refetch} />;
 
   return (
     <div className="products-page">
@@ -148,7 +145,8 @@ export default function ProductsPage() {
       <div className="page-header">
         <div>
           <p className="page-header-count">
-            {isLoading ? '…' : `${filtered.length}`}
+            {isLoading ? '…' : `${filtered.length} product${filtered.length !== 1 ? 's' : ''}`}
+            {(search || storeFilter) && ' (filtered)'}
           </p>
         </div>
         <button
@@ -160,7 +158,7 @@ export default function ProductsPage() {
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
-          {t('products.addProduct')}
+          Add Global Product
         </button>
       </div>
 
@@ -168,41 +166,41 @@ export default function ProductsPage() {
       <SearchBar
         search={search}
         onSearch={handleSearchChange}
-        category={categoryFilter}
-        onCategory={handleCategoryChange}
-        categories={categories}
+        category={storeFilter}
+        onCategory={handleStoreChange}
+        categories={stores}
       />
 
       {/* Error from save */}
       {saveError && (
         <div className="alert alert--error">
-          <strong>{t('common.error')}:</strong> {saveError}
+          <strong>Error:</strong> {saveError}
         </div>
       )}
 
       {/* Table / Empty */}
       {!isLoading && filtered.length === 0 ? (
         <EmptyState
-          title={search || categoryFilter ? t('products.noProducts') : t('products.noProducts')}
+          title={search || storeFilter ? 'No global products match your filters' : 'No global products yet'}
           description={
-            search || categoryFilter
-              ? ''
-              : ''
+            search || storeFilter
+              ? 'Try adjusting your search or filter.'
+              : 'Get started by adding your first global product to the catalog.'
           }
           action={
-            !search && !categoryFilter ? (
+            !search && !storeFilter ? (
               <button className="btn btn--primary" onClick={openAddModal}>
-                {t('products.addProduct')}
+                Add First Global Product
               </button>
             ) : (
-              <button className="btn btn--ghost" onClick={() => { handleSearchChange(''); handleCategoryChange(''); }}>
+              <button className="btn btn--ghost" onClick={() => { handleSearchChange(''); handleStoreChange(''); }}>
                 Clear Filters
               </button>
             )
           }
         />
       ) : (
-        <ProductTable
+        <GlobalProductTable
           products={paginated}
           isLoading={isLoading}
           onEdit={openEditModal}
@@ -218,7 +216,7 @@ export default function ProductsPage() {
       />
 
       {/* Add/Edit Modal */}
-      <ProductModal
+      <GlobalProductModal
         isOpen={modalOpen}
         product={editingProduct}
         onSave={handleSave}
@@ -229,8 +227,8 @@ export default function ProductsPage() {
       {/* Delete Confirmation */}
       <ConfirmDialog
         isOpen={Boolean(deleteTarget)}
-        title={t('common.delete')}
-        message={t('common.confirmDelete')}
+        title="Delete Global Product"
+        message={`Are you sure you want to delete "${deleteTarget?.name}"? This action cannot be undone.`}
         onConfirm={handleDeleteConfirm}
         onCancel={() => setDeleteTarget(null)}
         isLoading={isDeleting}

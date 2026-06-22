@@ -1,0 +1,36 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "save": "حفظ التغييرات",
+    "cancel": "إلغاء",
+    "success": "تم بنجاح!",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "confirmDelete": "هل أنت متأكد من الحذف؟ لا يمكن التراجع عن هذا الإجراء."
+  },
+  "sidebar": {
+    "dashboard": "لوحة القيادة",
+    "products": "المنتجات",
+    "globalProducts": "المنتجات العالمية",
+    "logout": "تسجيل الخروج",
+    "admin": "المدير"
+  },
+  "dashboard": {
+    "totalProducts": "إجمالي المنتجات",
+    "featuredProducts": "المنتجات المميزة"
+  },
+  "products": {
+    "title": "المنتجات",
+    "name": "اسم المنتج",
+    "category": "الفئة",
+    "price": "السعر",
+    "featured": "مميز",
+    "created": "تاريخ الإضافة",
+    "actions": "إجراءات",
+    "desc": "الوصف",
+    "image": "الصورة",
+    "addProduct": "إضافة منتج",
+    "noProducts": "لا توجد منتجات بعد"
+  }
+}

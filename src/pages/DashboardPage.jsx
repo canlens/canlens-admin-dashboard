@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useProducts } from '../hooks/useProducts.js';
 import StatCard from '../components/ui/StatCard.jsx';
 import LoadingSpinner from '../components/ui/LoadingSpinner.jsx';
@@ -7,6 +8,7 @@ import ErrorState from '../components/ui/ErrorState.jsx';
 
 export default function DashboardPage() {
   const { products, isLoading, error, refetch } = useProducts();
+  const { t } = useTranslation();
 
   const stats = useMemo(() => {
     const featured = products.filter((p) => p.featured).length;
@@ -18,8 +20,8 @@ export default function DashboardPage() {
     return { total: products.length, featured, categories, recent };
   }, [products]);
 
-  if (isLoading) return <LoadingSpinner message="Loading dashboard…" />;
-  if (error) return <ErrorState title="Failed to load dashboard" message={error} onRetry={refetch} />;
+  if (isLoading) return <LoadingSpinner message={t('common.loading')} />;
+  if (error) return <ErrorState title={t('common.error')} message={error} onRetry={refetch} />;
 
   return (
     <div className="dashboard-page">
@@ -34,7 +36,7 @@ export default function DashboardPage() {
             </svg>
           }
           value={stats.total}
-          label="Total Products"
+          label={t('dashboard.totalProducts')}
           color="blue"
         />
         <StatCard
@@ -44,7 +46,7 @@ export default function DashboardPage() {
             </svg>
           }
           value={stats.featured}
-          label="Featured Products"
+          label={t('products.featured')}
           color="purple"
         />
         <StatCard
@@ -54,19 +56,8 @@ export default function DashboardPage() {
             </svg>
           }
           value={stats.categories.length}
-          label="Categories"
+          label={t('products.category')}
           color="green"
-        />
-        <StatCard
-          icon={
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-          }
-          value={stats.recent.length}
-          label="Recent Products"
-          color="orange"
         />
       </section>
 
@@ -81,7 +72,7 @@ export default function DashboardPage() {
 
         {stats.recent.length === 0 ? (
           <div className="dashboard-empty">
-            <p>No products yet. <Link to="/admin/products" className="link">Add your first product</Link></p>
+            <p>{t('products.noProducts')} <Link to="/admin/products" className="link">{t('products.addProduct')}</Link></p>
           </div>
         ) : (
           <div className="recent-products-list">

@@ -284,3 +284,36 @@
     display: table-cell;
   }
 }
+
+@media (max-width: 768px) {
+  .product-table, .product-table tbody, .product-table tr, .product-table td {
+    display: block;
+    width: 100%;
+  }
+  .product-table thead {
+    display: none;
+  }
+  .product-table-row {
+    margin-bottom: 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .product-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .product-table td:last-child {
+    border-bottom: none;
+  }
+  .product-table-name-cell {
+    width: 100%;
+  }
+  .product-table-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

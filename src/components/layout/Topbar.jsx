@@ -1,16 +1,35 @@
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext.jsx';
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 
-const PAGE_TITLES = {
-  '/admin': { title: 'Dashboard', subtitle: 'Overview & quick stats' },
-  '/admin/products': { title: 'Products', subtitle: 'Manage your product catalog' },
+const PAGE_KEYS = {
+  '/admin': 'dashboard',
+  '/admin/products': 'products',
+  '/admin/global-products': 'globalProducts',
+  '/admin/portfolio': 'portfolio',
 };
 
 export default function Topbar({ onMenuToggle }) {
   const location = useLocation();
   const { token } = useAuth();
+  const { t, i18n } = useTranslation();
 
-  const page = PAGE_TITLES[location.pathname] || { title: 'Admin', subtitle: '' };
+  const pageKey = PAGE_KEYS[location.pathname] || 'dashboard';
+
+  useEffect(() => {
+    document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+    if (i18n.language === 'ar') {
+      document.body.classList.add('rtl');
+    } else {
+      document.body.classList.remove('rtl');
+    }
+  }, [i18n.language]);
+
+  const toggleLanguage = () => {
+    const nextLang = i18n.language === 'en' ? 'ar' : 'en';
+    i18n.changeLanguage(nextLang);
+  };
 
   return (
     <header className="topbar">
@@ -28,12 +47,15 @@ export default function Topbar({ onMenuToggle }) {
           </svg>
         </button>
         <div className="topbar-page-info">
-          <h1 className="topbar-title">{page.title}</h1>
-          {page.subtitle && <p className="topbar-subtitle">{page.subtitle}</p>}
+          <h1 className="topbar-title">{t(`nav.${pageKey}`)}</h1>
+          <p className="topbar-subtitle">{t(`${pageKey}.title`)}</p>
         </div>
       </div>
 
       <div className="topbar-right">
+        <button onClick={toggleLanguage} className="topbar-lang-btn" style={{ background: 'transparent', border: '1px solid var(--canlens-border)', color: 'var(--canlens-text)', padding: '0.25rem 0.5rem', borderRadius: '4px', cursor: 'pointer', marginRight: '1rem' }}>
+          {i18n.language === 'en' ? 'العربية' : 'English'}
+        </button>
         <div className="topbar-status">
           <span className="topbar-status-dot" />
           <span className="topbar-status-label">Connected</span>

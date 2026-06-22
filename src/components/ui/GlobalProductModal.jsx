@@ -9,7 +9,7 @@ const EMPTY_FORM = {
   featured: false,
 };
 
-export default function AffiliateProductModal({ isOpen, product, onSave, onClose, isSaving }) {
+export default function GlobalProductModal({ isOpen, product, onSave, onClose, isSaving }) {
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const firstInputRef = useRef(null);
@@ -63,7 +63,7 @@ export default function AffiliateProductModal({ isOpen, product, onSave, onClose
         {/* Header */}
         <div className="modal-header">
           <h2 id="modal-title" className="modal-title">
-            {isEditing ? 'Edit Affiliate Product' : 'Add New Affiliate Product'}
+            {isEditing ? 'Edit Global Product' : 'Add New Global Product'}
           </h2>
           <button className="modal-close" onClick={onClose} aria-label="Close modal" id="modal-close-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -160,7 +160,7 @@ export default function AffiliateProductModal({ isOpen, product, onSave, onClose
               <span className="form-toggle-track">
                 <span className="form-toggle-thumb" />
               </span>
-              <span className="form-toggle-label">Featured Affiliate Product</span>
+              <span className="form-toggle-label">Featured Global Product</span>
             </label>
           </div>
 

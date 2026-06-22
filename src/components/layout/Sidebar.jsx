@@ -1,10 +1,11 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext.jsx';
+import { useTranslation } from 'react-i18next';
 
 const NAV_ITEMS = [
   {
     to: '/admin',
-    label: 'Dashboard',
+    labelKey: 'dashboard',
     end: true,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -17,7 +18,7 @@ const NAV_ITEMS = [
   },
   {
     to: '/admin/products',
-    label: 'Products',
+    labelKey: 'products',
     end: false,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -28,12 +29,24 @@ const NAV_ITEMS = [
     ),
   },
   {
-    to: '/admin/affiliate-products',
-    label: 'Affiliates',
+    to: '/admin/global-products',
+    labelKey: 'globalProducts',
     end: false,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+      </svg>
+    ),
+  },
+  {
+    to: '/admin/portfolio',
+    labelKey: 'portfolio',
+    end: false,
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <polyline points="21 15 16 10 5 21" />
       </svg>
     ),
   },
@@ -42,6 +55,7 @@ const NAV_ITEMS = [
 export default function Sidebar({ isOpen, onClose }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     logout();
@@ -79,7 +93,7 @@ export default function Sidebar({ isOpen, onClose }) {
             onClick={onClose}
           >
             <span className="sidebar-nav-icon">{item.icon}</span>
-            {item.label}
+            {t(`sidebar.${item.labelKey}`)}
           </NavLink>
         ))}
       </nav>
@@ -92,7 +106,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <polyline points="16 17 21 12 16 7" />
             <line x1="21" y1="12" x2="9" y2="12" />
           </svg>
-          Sign Out
+          {t('common.logout')}
         </button>
       </div>
     </aside>

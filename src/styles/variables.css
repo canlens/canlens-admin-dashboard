@@ -4,11 +4,11 @@
 
 :root {
   /* ── Brand Colors ── */
-  --color-primary:       #3bb5fe;
-  --color-primary-hover: #2ba5ed;
+  --color-primary:       #4BB5F5;
+  --color-primary-hover: #3AA4E4;
   --color-secondary:     #000000;
-  --color-accent:        #3bb5fe;
-  --color-primary-dim:   rgba(67, 181, 244, 0.12);
+  --color-accent:        #4BB5F5;
+  --color-primary-dim:   rgba(75, 181, 245, 0.12);
 
   /* ── Backgrounds ── */
   --color-background:    #000000;

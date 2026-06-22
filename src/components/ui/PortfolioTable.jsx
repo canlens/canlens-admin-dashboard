@@ -1,15 +1,19 @@
-export default function AffiliateProductTable({ products, isLoading, onEdit, onDelete }) {
+import { useTranslation } from 'react-i18next';
+
+export default function PortfolioTable({ items, isLoading, onEdit, onDelete }) {
+  const { t } = useTranslation();
+
   if (isLoading) {
     return (
       <div className="table-wrapper">
         <table className="product-table">
           <thead>
             <tr>
-              <th>Product</th>
-              <th>Store</th>
-              <th className="hide-on-mobile">URL</th>
+              <th>Title</th>
+              <th>Category</th>
               <th className="hide-on-mobile">Featured</th>
-              <th>Actions</th>
+              <th className="hide-on-mobile">Created</th>
+              <th>{t('products.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -17,8 +21,8 @@ export default function AffiliateProductTable({ products, isLoading, onEdit, onD
               <tr key={i} className="table-skeleton-row">
                 <td><div className="skeleton skeleton--wide" /></td>
                 <td><div className="skeleton skeleton--medium" /></td>
-                <td className="hide-on-mobile"><div className="skeleton skeleton--medium" /></td>
                 <td className="hide-on-mobile"><div className="skeleton skeleton--short" /></td>
+                <td className="hide-on-mobile"><div className="skeleton skeleton--medium" /></td>
                 <td><div className="skeleton skeleton--short" /></td>
               </tr>
             ))}
@@ -33,23 +37,23 @@ export default function AffiliateProductTable({ products, isLoading, onEdit, onD
       <table className="product-table">
         <thead>
           <tr>
-            <th>Product</th>
-            <th>Store</th>
-            <th className="hide-on-mobile">URL</th>
+            <th>Title</th>
+            <th>Category</th>
             <th className="hide-on-mobile">Featured</th>
-            <th>Actions</th>
+            <th className="hide-on-mobile">Created</th>
+            <th>{t('products.actions')}</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr key={product.id} className="product-table-row">
+          {items.map((item) => (
+            <tr key={item.id} className="product-table-row">
               <td>
                 <div className="product-table-name-cell">
-                  {product.imageUrl ? (
+                  {item.imageUrl ? (
                     <img
                       className="product-table-thumb"
-                      src={product.imageUrl}
-                      alt={product.name}
+                      src={item.imageUrl}
+                      alt={item.title}
                       onError={(e) => { e.target.style.display = 'none'; }}
                     />
                   ) : (
@@ -62,45 +66,47 @@ export default function AffiliateProductTable({ products, isLoading, onEdit, onD
                     </div>
                   )}
                   <div>
-                    <p className="product-table-name">{product.name}</p>
-                    {product.description && (
-                      <p className="product-table-desc">{String(product.description).slice(0, 60)}{String(product.description).length > 60 ? '…' : ''}</p>
+                    <p className="product-table-name">{item.title}</p>
+                    {item.description && (
+                      <p className="product-table-desc">{String(item.description).slice(0, 60)}{String(item.description).length > 60 ? '…' : ''}</p>
                     )}
                   </div>
                 </div>
               </td>
               <td>
-                <span className="badge">{product.storeName}</span>
+                <span className="badge">{item.category}</span>
               </td>
               <td className="hide-on-mobile">
-                <a href={product.productUrl} target="_blank" rel="noopener noreferrer" style={{color: '#3FAFF8'}}>Link</a>
-              </td>
-              <td className="hide-on-mobile">
-                {product.featured ? (
-                  <span className="badge badge--featured">⭐ Featured</span>
+                {item.featured ? (
+                  <span className="badge badge--featured">⭐ {t('products.featured')}</span>
                 ) : (
                   <span className="badge badge--muted">—</span>
                 )}
+              </td>
+              <td className="hide-on-mobile">
+                <span className="product-table-date">
+                  {item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'}
+                </span>
               </td>
               <td>
                 <div className="product-table-actions">
                   <button
                     className="action-btn action-btn--edit"
-                    onClick={() => onEdit(product)}
-                    id={`edit-product-${product.id}`}
-                    aria-label={`Edit ${product.name}`}
+                    onClick={() => onEdit(item)}
+                    id={`edit-portfolio-${item.id}`}
+                    aria-label={`${t('common.edit')} ${item.title}`}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
                       <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
                     </svg>
-                    Edit
+                    {t('common.edit')}
                   </button>
                   <button
                     className="action-btn action-btn--delete"
-                    onClick={() => onDelete(product)}
-                    id={`delete-product-${product.id}`}
-                    aria-label={`Delete ${product.name}`}
+                    onClick={() => onDelete(item)}
+                    id={`delete-portfolio-${item.id}`}
+                    aria-label={`${t('common.delete')} ${item.title}`}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="3 6 5 6 21 6" />
@@ -108,7 +114,7 @@ export default function AffiliateProductTable({ products, isLoading, onEdit, onD
                       <path d="M10 11v6M14 11v6" />
                       <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
                     </svg>
-                    Delete
+                    {t('common.delete')}
                   </button>
                 </div>
               </td>

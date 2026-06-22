@@ -81,13 +81,25 @@ function rowToProduct(row) {
   };
 }
 
-function rowToAffiliateProduct(row) {
+function rowToGlobalProduct(row) {
   return {
     id: row[0] ? String(row[0]) : '',
     name: row[1] || '',
     imageUrl: row[2] || '',
     productUrl: row[3] || '',
     storeName: row[4] || '',
+    featured: row[5] === true || row[5] === 'TRUE' || row[5] === 'true',
+    createdAt: row[6] || '',
+  };
+}
+
+function rowToPortfolioItem(row) {
+  return {
+    id: row[0] ? String(row[0]) : '',
+    title: row[1] || '',
+    imageUrl: row[2] || '',
+    category: row[3] || '',
+    description: row[4] || '',
     featured: row[5] === true || row[5] === 'TRUE' || row[5] === 'true',
     createdAt: row[6] || '',
   };
@@ -127,28 +139,52 @@ function doGet(e) {
       return jsonResponse({ success: true, data: products, total: products.length });
     }
 
-    // GET /affiliate-products
-    if (path === 'affiliate-products') {
+    // GET /global-products
+    if (path === 'global-products') {
       var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SHEET_ID'));
-      var sheet = ss.getSheetByName('AffiliateProducts');
+      var sheet = ss.getSheetByName('GlobalProducts');
       if (!sheet) {
-        return jsonResponse({ success: false, error: 'AffiliateProducts sheet not found' }, 404);
+        return jsonResponse({ success: false, error: 'GlobalProducts sheet not found' }, 404);
       }
       var data = sheet.getDataRange().getValues();
       var rows = data.slice(1);
       var products = rows
         .filter(function (row) { return row[0] !== ''; })
-        .map(function (row) { return rowToAffiliateProduct(row); });
+        .map(function (row) { return rowToGlobalProduct(row); });
 
       if (id) {
         var product = products.find(function (p) { return p.id === String(id); });
         if (!product) {
-          return jsonResponse({ success: false, error: 'Affiliate Product not found' }, 404);
+          return jsonResponse({ success: false, error: 'Global Product not found' }, 404);
         }
         return jsonResponse({ success: true, data: product });
       }
 
       return jsonResponse({ success: true, data: products, total: products.length });
+    }
+
+    // GET /portfolio
+    if (path === 'portfolio') {
+      var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SHEET_ID'));
+      var sheet = ss.getSheetByName('Portfolio');
+      if (!sheet) {
+        return jsonResponse({ success: false, error: 'Portfolio sheet not found' }, 404);
+      }
+      var data = sheet.getDataRange().getValues();
+      var rows = data.slice(1);
+      var items = rows
+        .filter(function (row) { return row[0] !== ''; })
+        .map(function (row) { return rowToPortfolioItem(row); });
+
+      if (id) {
+        var item = items.find(function (p) { return p.id === String(id); });
+        if (!item) {
+          return jsonResponse({ success: false, error: 'Portfolio Item not found' }, 404);
+        }
+        return jsonResponse({ success: true, data: item });
+      }
+
+      return jsonResponse({ success: true, data: items, total: items.length });
     }
 
     return jsonResponse({ success: false, error: 'Not found' }, 404);
@@ -286,19 +322,19 @@ function doPost(e) {
       return jsonResponse({ success: true, message: 'Product deleted' });
     }
 
-    // ── Affiliate Products Actions ─────────────────────────
-    function getAffiliateSheet() {
+    // ── Global Products Actions ─────────────────────────
+    function getGlobalSheet() {
       var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SHEET_ID'));
-      var sheet = ss.getSheetByName('AffiliateProducts');
+      var sheet = ss.getSheetByName('GlobalProducts');
       if (!sheet) {
-        sheet = ss.insertSheet('AffiliateProducts');
+        sheet = ss.insertSheet('GlobalProducts');
         sheet.appendRow(['id', 'name', 'imageUrl', 'productUrl', 'storeName', 'featured', 'createdAt']);
       }
       return sheet;
     }
 
-    if (action === 'createAffiliateProduct') {
-      var sheet = getAffiliateSheet();
+    if (action === 'createGlobalProduct') {
+      var sheet = getGlobalSheet();
       var newId = Utilities.getUuid();
       var now = new Date().toISOString();
       
@@ -325,11 +361,11 @@ function doPost(e) {
       });
     }
 
-    if (action === 'updateAffiliateProduct') {
+    if (action === 'updateGlobalProduct') {
       if (!body.id) {
         return jsonResponse({ success: false, error: 'id is required' }, 400);
       }
-      var sheet = getAffiliateSheet();
+      var sheet = getGlobalSheet();
       var data = sheet.getDataRange().getValues();
       var rowIndex = -1;
       for (var i = 1; i < data.length; i++) {
@@ -339,7 +375,7 @@ function doPost(e) {
         }
       }
       if (rowIndex === -1) {
-        return jsonResponse({ success: false, error: 'Affiliate Product not found' }, 404);
+        return jsonResponse({ success: false, error: 'Global Product not found' }, 404);
       }
       
       sheet.getRange(rowIndex, 2).setValue(body.name || '');
@@ -351,11 +387,11 @@ function doPost(e) {
       return jsonResponse({ success: true, data: { id: body.id, name: body.name } });
     }
 
-    if (action === 'deleteAffiliateProduct') {
+    if (action === 'deleteGlobalProduct') {
       if (!body.id) {
         return jsonResponse({ success: false, error: 'id is required' }, 400);
       }
-      var sheet = getAffiliateSheet();
+      var sheet = getGlobalSheet();
       var data = sheet.getDataRange().getValues();
       var rowIndex = -1;
       for (var i = 1; i < data.length; i++) {
@@ -365,11 +401,97 @@ function doPost(e) {
         }
       }
       if (rowIndex === -1) {
-        return jsonResponse({ success: false, error: 'Affiliate Product not found' }, 404);
+        return jsonResponse({ success: false, error: 'Global Product not found' }, 404);
       }
       
       sheet.deleteRow(rowIndex);
-      return jsonResponse({ success: true, message: 'Affiliate Product deleted' });
+      return jsonResponse({ success: true, message: 'Global Product deleted' });
+    }
+
+    // ── Portfolio Actions ─────────────────────────
+    function getPortfolioSheet() {
+      var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SHEET_ID'));
+      var sheet = ss.getSheetByName('Portfolio');
+      if (!sheet) {
+        sheet = ss.insertSheet('Portfolio');
+        sheet.appendRow(['id', 'title', 'imageUrl', 'category', 'description', 'featured', 'createdAt']);
+      }
+      return sheet;
+    }
+
+    if (action === 'createPortfolioItem') {
+      var sheet = getPortfolioSheet();
+      var newId = Utilities.getUuid();
+      var now = new Date().toISOString();
+      
+      sheet.appendRow([
+        newId,
+        body.title || '',
+        body.imageUrl || '',
+        body.category || '',
+        body.description || '',
+        body.featured ? 'TRUE' : 'FALSE',
+        now,
+      ]);
+      return jsonResponse({
+        success: true,
+        data: {
+          id: newId,
+          title: body.title,
+          imageUrl: body.imageUrl,
+          category: body.category,
+          description: body.description,
+          featured: body.featured,
+          createdAt: now,
+        },
+      });
+    }
+
+    if (action === 'updatePortfolioItem') {
+      if (!body.id) {
+        return jsonResponse({ success: false, error: 'id is required' }, 400);
+      }
+      var sheet = getPortfolioSheet();
+      var data = sheet.getDataRange().getValues();
+      var rowIndex = -1;
+      for (var i = 1; i < data.length; i++) {
+        if (String(data[i][0]) === String(body.id)) {
+          rowIndex = i + 1;
+          break;
+        }
+      }
+      if (rowIndex === -1) {
+        return jsonResponse({ success: false, error: 'Portfolio Item not found' }, 404);
+      }
+      
+      sheet.getRange(rowIndex, 2).setValue(body.title || '');
+      sheet.getRange(rowIndex, 3).setValue(body.imageUrl || '');
+      sheet.getRange(rowIndex, 4).setValue(body.category || '');
+      sheet.getRange(rowIndex, 5).setValue(body.description || '');
+      sheet.getRange(rowIndex, 6).setValue(body.featured ? 'TRUE' : 'FALSE');
+
+      return jsonResponse({ success: true, data: { id: body.id, title: body.title } });
+    }
+
+    if (action === 'deletePortfolioItem') {
+      if (!body.id) {
+        return jsonResponse({ success: false, error: 'id is required' }, 400);
+      }
+      var sheet = getPortfolioSheet();
+      var data = sheet.getDataRange().getValues();
+      var rowIndex = -1;
+      for (var i = 1; i < data.length; i++) {
+        if (String(data[i][0]) === String(body.id)) {
+          rowIndex = i + 1;
+          break;
+        }
+      }
+      if (rowIndex === -1) {
+        return jsonResponse({ success: false, error: 'Portfolio Item not found' }, 404);
+      }
+      
+      sheet.deleteRow(rowIndex);
+      return jsonResponse({ success: true, message: 'Portfolio Item deleted' });
     }
 
     return jsonResponse({ success: false, error: 'Unknown action' }, 400);

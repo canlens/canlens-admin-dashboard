@@ -92,7 +92,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+  padding: 12px 14px;
+  min-height: 44px;
   border-radius: var(--radius-md);
   color: var(--color-text-secondary);
   font-size: 14px;
@@ -139,7 +140,8 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px 14px;
+  min-height: 44px;
   border-radius: var(--radius-md);
   color: var(--color-text-secondary);
   font-size: 14px;
@@ -186,8 +188,8 @@
 
 .topbar-menu-btn {
   display: flex;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-sm);
