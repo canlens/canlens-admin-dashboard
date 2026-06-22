@@ -14,7 +14,8 @@
     "products": "المنتجات",
     "globalProducts": "المنتجات العالمية",
     "logout": "تسجيل الخروج",
-    "admin": "المدير"
+    "admin": "المدير",
+    "portfolio": "معرض الأعمال"
   },
   "dashboard": {
     "totalProducts": "إجمالي المنتجات",

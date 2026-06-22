@@ -14,7 +14,8 @@
     "products": "Products",
     "globalProducts": "Global Products",
     "logout": "Logout",
-    "admin": "Admin"
+    "admin": "Admin",
+    "portfolio": "Portfolio"
   },
   "dashboard": {
     "totalProducts": "Total Products",

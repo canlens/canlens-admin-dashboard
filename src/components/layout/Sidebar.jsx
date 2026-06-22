@@ -106,7 +106,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <polyline points="16 17 21 12 16 7" />
             <line x1="21" y1="12" x2="9" y2="12" />
           </svg>
-          {t('common.logout')}
+          {t('sidebar.logout')}
         </button>
       </div>
     </aside>
