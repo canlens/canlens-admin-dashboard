@@ -66,12 +66,8 @@ export default function Sidebar({ isOpen, onClose }) {
     <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
       {/* Logo */}
       <div className="sidebar-logo">
-        <div className="sidebar-logo-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="3" fill="#3FAFF8" />
-            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" stroke="#3FAFF8" strokeWidth="1.5" fill="none" />
-            <path d="M12 6a6 6 0 100 12A6 6 0 0012 6z" stroke="#3FAFF8" strokeWidth="1" strokeDasharray="2 2" fill="none" />
-          </svg>
+        <div className="sidebar-logo-icon" style={{ backgroundColor: 'white', borderRadius: '50%', overflow: 'hidden' }}>
+          <img src="/images/canlensLogo.png" alt="CanLens Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
         </div>
         <div className="sidebar-logo-text">
           <span className="sidebar-logo-brand">CanLens</span>
