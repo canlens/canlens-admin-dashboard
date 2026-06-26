@@ -12,6 +12,10 @@ export function Footer() {
             <div className="footer-logo-group">
               <img src="/images/canlensLogo.png" alt="CanLens Studio" className="footer-logo" />
               <div>
+
+
+
+                {/* comment line mustafa */}
                 <h3 className="footer-brand-title">CanLens Studio</h3>
                 <p className="footer-brand-subtitle">Kigali, Rwanda</p>
               </div>
