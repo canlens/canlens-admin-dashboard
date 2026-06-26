@@ -110,6 +110,17 @@ function rowToPortfolioItem(row) {
 // ──────────────────────────────────────────────────────────
 
 // ──────────────────────────────────────────────────────────
+// Cache Helper
+// ──────────────────────────────────────────────────────────
+function clearProductsCache() {
+  try {
+    CacheService.getScriptCache().remove('products_cache');
+  } catch (err) {
+    // Ignore cache errors
+  }
+}
+
+// ──────────────────────────────────────────────────────────
 // doGet — Handle GET requests
 // ──────────────────────────────────────────────────────────
 function doGet(e) {
@@ -119,14 +130,43 @@ function doGet(e) {
 
     // GET /products or GET /products?id=123
     if (path === 'products' || path === '' || path === '/products') {
+      try {
+        var cache = CacheService.getScriptCache();
+        var cached = cache.get('products_cache');
+        if (cached) {
+          var parsedCache = JSON.parse(cached);
+          if (id) {
+            var product = parsedCache.data.find(function (p) { return p.id === String(id); });
+            if (!product) {
+              return jsonResponse({ success: false, error: 'Product not found' }, 404);
+            }
+            return jsonResponse({ success: true, data: product });
+          }
+          return jsonResponse(parsedCache);
+        }
+      } catch (err) {
+        // Ignore cache errors and continue normally
+      }
+
       var sheet = getSheet();
-      var data = sheet.getDataRange().getValues();
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
 
       // Skip header row
-      var rows = data.slice(1);
+      var rows = data.length > 1 ? data.slice(1) : [];
       var products = rows
         .filter(function (row) { return row[0] !== ''; })
         .map(function (row) { return rowToProduct(row); });
+
+      var responseData = { success: true, data: products, total: products.length };
+
+      try {
+        var cache = CacheService.getScriptCache();
+        cache.put('products_cache', JSON.stringify(responseData), 300);
+      } catch (err) {
+        // Ignore cache errors
+      }
 
       if (id) {
         var product = products.find(function (p) { return p.id === String(id); });
@@ -136,7 +176,7 @@ function doGet(e) {
         return jsonResponse({ success: true, data: product });
       }
 
-      return jsonResponse({ success: true, data: products, total: products.length });
+      return jsonResponse(responseData);
     }
 
     // GET /global-products
@@ -146,8 +186,10 @@ function doGet(e) {
       if (!sheet) {
         return jsonResponse({ success: false, error: 'GlobalProducts sheet not found' }, 404);
       }
-      var data = sheet.getDataRange().getValues();
-      var rows = data.slice(1);
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
+      var rows = data.length > 1 ? data.slice(1) : [];
       var products = rows
         .filter(function (row) { return row[0] !== ''; })
         .map(function (row) { return rowToGlobalProduct(row); });
@@ -170,8 +212,10 @@ function doGet(e) {
       if (!sheet) {
         return jsonResponse({ success: false, error: 'Portfolio sheet not found' }, 404);
       }
-      var data = sheet.getDataRange().getValues();
-      var rows = data.slice(1);
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
+      var rows = data.length > 1 ? data.slice(1) : [];
       var items = rows
         .filter(function (row) { return row[0] !== ''; })
         .map(function (row) { return rowToPortfolioItem(row); });
@@ -246,6 +290,9 @@ function doPost(e) {
         body.featured ? 'TRUE' : 'FALSE',
         now,
       ]);
+      
+      clearProductsCache();
+      
       return jsonResponse({
         success: true,
         data: {
@@ -268,7 +315,9 @@ function doPost(e) {
         return jsonResponse({ success: false, error: 'id is required' }, 400);
       }
       var sheet = getSheet();
-      var data = sheet.getDataRange().getValues();
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
       var rowIndex = -1;
       var existingImageId = '';
       for (var i = 1; i < data.length; i++) {
@@ -295,6 +344,8 @@ function doPost(e) {
       sheet.getRange(rowIndex, 7).setValue(body.price || 0);
       sheet.getRange(rowIndex, 8).setValue(body.featured ? 'TRUE' : 'FALSE');
 
+      clearProductsCache();
+
       return jsonResponse({ success: true, data: { id: body.id, imageId: finalImageId, imageUrl: finalImageUrl } });
     }
 
@@ -304,7 +355,9 @@ function doPost(e) {
         return jsonResponse({ success: false, error: 'id is required' }, 400);
       }
       var sheet = getSheet();
-      var data = sheet.getDataRange().getValues();
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
       var rowIndex = -1;
       var existingImageId = '';
       for (var i = 1; i < data.length; i++) {
@@ -319,6 +372,9 @@ function doPost(e) {
       }
       
       sheet.deleteRow(rowIndex);
+      
+      clearProductsCache();
+      
       return jsonResponse({ success: true, message: 'Product deleted' });
     }
 
@@ -366,7 +422,9 @@ function doPost(e) {
         return jsonResponse({ success: false, error: 'id is required' }, 400);
       }
       var sheet = getGlobalSheet();
-      var data = sheet.getDataRange().getValues();
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
       var rowIndex = -1;
       for (var i = 1; i < data.length; i++) {
         if (String(data[i][0]) === String(body.id)) {
@@ -392,7 +450,9 @@ function doPost(e) {
         return jsonResponse({ success: false, error: 'id is required' }, 400);
       }
       var sheet = getGlobalSheet();
-      var data = sheet.getDataRange().getValues();
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
       var rowIndex = -1;
       for (var i = 1; i < data.length; i++) {
         if (String(data[i][0]) === String(body.id)) {
@@ -452,7 +512,9 @@ function doPost(e) {
         return jsonResponse({ success: false, error: 'id is required' }, 400);
       }
       var sheet = getPortfolioSheet();
-      var data = sheet.getDataRange().getValues();
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
       var rowIndex = -1;
       for (var i = 1; i < data.length; i++) {
         if (String(data[i][0]) === String(body.id)) {
@@ -478,7 +540,9 @@ function doPost(e) {
         return jsonResponse({ success: false, error: 'id is required' }, 400);
       }
       var sheet = getPortfolioSheet();
-      var data = sheet.getDataRange().getValues();
+      var lastRow = sheet.getLastRow();
+      var lastCol = sheet.getLastColumn();
+      var data = (lastRow > 0 && lastCol > 0) ? sheet.getRange(1, 1, lastRow, lastCol).getValues() : [];
       var rowIndex = -1;
       for (var i = 1; i < data.length; i++) {
         if (String(data[i][0]) === String(body.id)) {
