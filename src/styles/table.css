@@ -1,0 +1,319 @@
+/* ============================================================
+   CanLens Admin — Data Table
+   ============================================================ */
+
+.table-wrapper {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 100%;
+}
+
+.hide-on-mobile {
+  display: none;
+}
+
+/* ── Header ── */
+.product-table thead tr {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.product-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  background: var(--color-surface);
+}
+
+.product-table th:first-child {
+  border-radius: var(--radius-lg) 0 0 0;
+}
+
+.product-table th:last-child {
+  border-radius: 0 var(--radius-lg) 0 0;
+}
+
+/* ── Body ── */
+.product-table-row {
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--transition-fast);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.product-table-row:last-child {
+  border-bottom: none;
+}
+
+.product-table-row:hover {
+  background: rgba(255,255,255,0.025);
+}
+
+.product-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+}
+
+/* ── Name Cell ── */
+.product-table-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-table-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+
+.product-table-thumb-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.product-table-name {
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 2px;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-table-desc {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: none;
+}
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--color-primary-dim);
+  color: var(--color-primary);
+  border: 1px solid rgba(63, 175, 248, 0.2);
+  white-space: nowrap;
+}
+
+.badge--featured {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--color-warning);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.badge--muted {
+  background: transparent;
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+/* ── Price ── */
+.product-table-price {
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: 15px;
+}
+
+/* ── Date ── */
+.product-table-date {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* ── Action Buttons ── */
+.product-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.action-btn span {
+  display: none;
+}
+
+.action-btn--edit {
+  background: var(--color-primary-dim);
+  color: var(--color-primary);
+  border: 1px solid rgba(63, 175, 248, 0.2);
+}
+
+.action-btn--edit:hover {
+  background: rgba(63, 175, 248, 0.2);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary-glow);
+}
+
+.action-btn--delete {
+  background: var(--color-error-dim);
+  color: var(--color-error);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.action-btn--delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--color-error);
+}
+
+/* ── Skeleton Rows ── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+  height: 16px;
+}
+
+.skeleton--short  { width: 60px; }
+.skeleton--medium { width: 120px; }
+.skeleton--wide   { width: 180px; }
+
+.table-skeleton-row td {
+  padding: 18px 16px;
+}
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.pagination-btn {
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border: 1px solid transparent;
+  background: transparent;
+  transition: all var(--transition-fast);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: var(--color-card);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.pagination-btn--active {
+  background: var(--color-primary-dim);
+  border-color: var(--color-border-active);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-ellipsis {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  padding: 0 4px;
+}
+
+@media (min-width: 601px) {
+  .product-table-desc { display: block; }
+  .action-btn span    { display: inline; }
+  .action-btn { padding: 6px 12px; }
+}
+
+@media (min-width: 769px) {
+  .product-table {
+    min-width: 700px;
+  }
+  .hide-on-mobile {
+    display: table-cell;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-table, .product-table tbody, .product-table tr, .product-table td {
+    display: block;
+    width: 100%;
+  }
+  .product-table thead {
+    display: none;
+  }
+  .product-table-row {
+    margin-bottom: 16px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .product-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .product-table td:last-child {
+    border-bottom: none;
+  }
+  .product-table-name-cell {
+    width: 100%;
+  }
+  .product-table-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

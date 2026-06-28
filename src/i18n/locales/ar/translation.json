@@ -1,0 +1,63 @@
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "actions": "إجراءات",
+    "search": "بحث...",
+    "loading": "جاري التحميل...",
+    "success": "نجاح",
+    "error": "خطأ",
+    "confirmDelete": "هل أنت متأكد أنك تريد حذف هذا؟",
+    "logout": "تسجيل الخروج"
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "products": "المنتجات المحلية",
+    "globalProducts": "المنتجات العالمية",
+    "portfolio": "المعرض",
+    "settings": "الإعدادات"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "welcome": "مرحباً بك مرة أخرى، أيها المدير!",
+    "totalProducts": "إجمالي المنتجات",
+    "totalGlobalProducts": "المنتجات العالمية",
+    "portfolioItems": "عناصر المعرض"
+  },
+  "products": {
+    "title": "إدارة المنتجات",
+    "addProduct": "إضافة منتج",
+    "editProduct": "تعديل المنتج",
+    "name": "الاسم",
+    "category": "الفئة",
+    "price": "السعر",
+    "description": "الوصف",
+    "featured": "مميز",
+    "image": "صورة",
+    "noProducts": "لم يتم العثور على منتجات."
+  },
+  "globalProducts": {
+    "title": "المنتجات العالمية",
+    "addProduct": "إضافة منتج عالمي",
+    "editProduct": "تعديل المنتج العالمي",
+    "name": "الاسم",
+    "productUrl": "رابط المنتج",
+    "featured": "مميز",
+    "image": "صورة",
+    "noProducts": "لم يتم العثور على منتجات عالمية."
+  },
+  "portfolio": {
+    "title": "إدارة المعرض",
+    "addItem": "إضافة عنصر",
+    "editItem": "تعديل العنصر",
+    "titleField": "العنوان",
+    "category": "الفئة",
+    "description": "الوصف",
+    "featured": "مميز",
+    "image": "صورة",
+    "noItems": "لم يتم العثور على عناصر."
+  }
+}

@@ -1,0 +1,84 @@
+/* RTL Support for Arabic */
+
+body.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+body.rtl .sidebar {
+  right: 0;
+  left: auto;
+  border-right: none;
+  border-left: 1px solid var(--canlens-border);
+}
+
+body.rtl .admin-main {
+  margin-left: 0;
+  margin-right: 250px;
+}
+
+@media (max-width: 768px) {
+  body.rtl .sidebar {
+    transform: translateX(100%);
+  }
+  body.rtl .sidebar.sidebar--open {
+    transform: translateX(0);
+  }
+  body.rtl .admin-main {
+    margin-right: 0;
+  }
+}
+
+body.rtl .topbar-left {
+  flex-direction: row;
+}
+
+body.rtl .topbar-right {
+  flex-direction: row-reverse;
+}
+
+body.rtl .topbar-lang-btn {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+body.rtl .topbar-status {
+  margin-left: 1rem;
+  margin-right: 0;
+}
+
+body.rtl .sidebar-nav-icon {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+body.rtl .sidebar-logout svg {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+body.rtl .table th,
+body.rtl .table td {
+  text-align: right;
+}
+
+body.rtl .table-actions {
+  justify-content: flex-end;
+}
+
+body.rtl .modal-close {
+  right: auto;
+  left: 1rem;
+}
+
+body.rtl .modal-actions {
+  justify-content: flex-start;
+}
+
+body.rtl .form-group label {
+  text-align: right;
+}
+
+body.rtl .form-control {
+  text-align: right;
+}

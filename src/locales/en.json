@@ -1,0 +1,45 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "save": "Save Changes",
+    "cancel": "Cancel",
+    "success": "Success!",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirmDelete": "Are you sure you want to delete this? This action cannot be undone."
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "globalProducts": "Global Products",
+    "logout": "Logout",
+    "admin": "Admin",
+    "portfolio": "Portfolio"
+  },
+  "dashboard": {
+    "subtitle": "Overview & quick stats",
+    "totalProducts": "Total Products",
+    "featuredProducts": "Featured Products"
+  },
+  "products": {
+    "title": "Products",
+    "subtitle": "Manage your product catalog",
+    "name": "Product Name",
+    "category": "Category",
+    "price": "Price",
+    "featured": "Featured",
+    "created": "Created",
+    "actions": "Actions",
+    "desc": "Description",
+    "image": "Image",
+    "addProduct": "Add Product",
+    "noProducts": "No products yet"
+  },
+  "globalProducts": {
+    "subtitle": "Manage global products"
+  },
+  "portfolio": {
+    "subtitle": "Manage your portfolio"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "actions": "Actions",
+    "search": "Search...",
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "confirmDelete": "Are you sure you want to delete this?",
+    "logout": "Logout"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Local Products",
+    "globalProducts": "Global Products",
+    "portfolio": "Portfolio",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, Admin!",
+    "totalProducts": "Total Products",
+    "totalGlobalProducts": "Global Products",
+    "portfolioItems": "Portfolio Items"
+  },
+  "products": {
+    "title": "Products Management",
+    "addProduct": "Add Product",
+    "editProduct": "Edit Product",
+    "name": "Name",
+    "category": "Category",
+    "price": "Price",
+    "description": "Description",
+    "featured": "Featured",
+    "image": "Image",
+    "noProducts": "No products found."
+  },
+  "globalProducts": {
+    "title": "Global Products",
+    "addProduct": "Add Global Product",
+    "editProduct": "Edit Global Product",
+    "name": "Name",
+    "productUrl": "Product URL",
+    "featured": "Featured",
+    "image": "Image",
+    "noProducts": "No global products found."
+  },
+  "portfolio": {
+    "title": "Portfolio Management",
+    "addItem": "Add Item",
+    "editItem": "Edit Item",
+    "titleField": "Title",
+    "category": "Category",
+    "description": "Description",
+    "featured": "Featured",
+    "image": "Image",
+    "noItems": "No portfolio items found."
+  }
+}
