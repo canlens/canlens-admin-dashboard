@@ -95,6 +95,10 @@ export function Footer() {
             <div className="footer-legal">
               <a href="#" className="footer-legal-link">Privacy Policy</a>
               <a href="#" className="footer-legal-link">Terms of Service</a>
+
+              
+              {/* developed by Mustafa khamis */}
+              <a href="https://mustafakhamis.dev" className="footer-legal-link">Developed by Mustafa Khamis</a>
             </div>
           </div>
         </div>
