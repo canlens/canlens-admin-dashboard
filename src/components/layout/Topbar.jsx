@@ -47,8 +47,8 @@ export default function Topbar({ onMenuToggle }) {
           </svg>
         </button>
         <div className="topbar-page-info">
-          <h1 className="topbar-title">{t(`nav.${pageKey}`)}</h1>
-          <p className="topbar-subtitle">{t(`${pageKey}.title`)}</p>
+          <h1 className="topbar-title">{t(`sidebar.${pageKey}`)}</h1>
+          <p className="topbar-subtitle">{t(`${pageKey}.subtitle`)}</p>
         </div>
       </div>
 

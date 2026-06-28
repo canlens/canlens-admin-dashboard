@@ -10,7 +10,7 @@
     "confirmDelete": "هل أنت متأكد من الحذف؟ لا يمكن التراجع عن هذا الإجراء."
   },
   "sidebar": {
-    "dashboard": "لوحة القيادة",
+    "dashboard": "لوحة التحكم",
     "products": "المنتجات",
     "globalProducts": "المنتجات العالمية",
     "logout": "تسجيل الخروج",
@@ -18,11 +18,13 @@
     "portfolio": "معرض الأعمال"
   },
   "dashboard": {
+    "subtitle": "نظرة عامة وإحصائيات سريعة",
     "totalProducts": "إجمالي المنتجات",
     "featuredProducts": "المنتجات المميزة"
   },
   "products": {
     "title": "المنتجات",
+    "subtitle": "إدارة كتالوج المنتجات",
     "name": "اسم المنتج",
     "category": "الفئة",
     "price": "السعر",
@@ -33,5 +35,11 @@
     "image": "الصورة",
     "addProduct": "إضافة منتج",
     "noProducts": "لا توجد منتجات بعد"
+  },
+  "globalProducts": {
+    "subtitle": "إدارة المنتجات العالمية"
+  },
+  "portfolio": {
+    "subtitle": "إدارة معرض الأعمال الخاص بك"
   }
 }

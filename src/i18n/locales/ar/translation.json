@@ -14,14 +14,14 @@
     "logout": "تسجيل الخروج"
   },
   "nav": {
-    "dashboard": "لوحة القيادة",
+    "dashboard": "لوحة التحكم",
     "products": "المنتجات المحلية",
     "globalProducts": "المنتجات العالمية",
     "portfolio": "المعرض",
     "settings": "الإعدادات"
   },
   "dashboard": {
-    "title": "لوحة القيادة",
+    "title": "لوحة التحكم",
     "welcome": "مرحباً بك مرة أخرى، أيها المدير!",
     "totalProducts": "إجمالي المنتجات",
     "totalGlobalProducts": "المنتجات العالمية",
