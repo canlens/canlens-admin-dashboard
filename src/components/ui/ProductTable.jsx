@@ -80,7 +80,7 @@ export default function ProductTable({ products, isLoading, onEdit, onDelete }) 
                 <span className="badge">{product.category}</span>
               </td>
               <td>
-                <span className="product-table-price">${Number(product.price).toFixed(2)}</span>
+                <span className="product-table-price">{Number(product.price).toLocaleString()} RWF</span>
               </td>
               <td className="hide-on-mobile">
                 {product.featured ? (

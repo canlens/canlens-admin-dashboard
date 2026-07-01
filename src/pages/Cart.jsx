@@ -116,10 +116,10 @@ export function Cart() {
 
                         <div className="cart-item-pricing">
                           <p className="cart-item-unit-price">
-                            ${item.price.toLocaleString()} each
+                            {item.price.toLocaleString()} RWF each
                           </p>
                           <p className="cart-item-total-price">
-                            ${(item.price * item.quantity).toLocaleString()}
+                            {(item.price * item.quantity).toLocaleString()} RWF
                           </p>
                         </div>
                       </div>
@@ -142,7 +142,7 @@ export function Cart() {
                 <div className="cart-summary-lines">
                   <div className="cart-summary-line">
                     <span>Subtotal</span>
-                    <span>${cartTotal.toLocaleString()}</span>
+                    <span>{cartTotal.toLocaleString()} RWF</span>
                   </div>
                   <div className="cart-summary-line">
                     <span>Shipping</span>
@@ -150,13 +150,13 @@ export function Cart() {
                   </div>
                   <div className="cart-summary-line">
                     <span>Tax (18%)</span>
-                    <span>${(cartTotal * 0.18).toLocaleString()}</span>
+                    <span>{(cartTotal * 0.18).toLocaleString()} RWF</span>
                   </div>
                   <div className="cart-summary-divider" />
                   <div className="cart-summary-total">
                     <span>Total</span>
                     <span className="cart-summary-total-val">
-                      ${(cartTotal * 1.18).toLocaleString()}
+                      {(cartTotal * 1.18).toLocaleString()} RWF
                     </span>
                   </div>
                 </div>
