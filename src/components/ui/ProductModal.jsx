@@ -8,8 +8,7 @@ const EMPTY_FORM = {
   category: '',
   description: '',
   price: '',
-  imageUrl: '',
-  imageFile: null,
+  previewImages: [],
   featured: false,
 };
 
@@ -31,8 +30,7 @@ export default function ProductModal({ isOpen, product, onSave, onClose, isSavin
         category: product.category || '',
         description: product.description || '',
         price: product.price !== undefined ? String(product.price) : '',
-        imageUrl: product.imageUrl || '',
-        imageFile: null,
+        previewImages: (product.imageUrl || '').split(',').filter(Boolean).map(url => ({ url, file: null })),
         featured: product.featured || false,
       } : EMPTY_FORM);
       setErrors({});
@@ -60,30 +58,28 @@ export default function ProductModal({ isOpen, product, onSave, onClose, isSavin
   }
 
   async function handleImageChange(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
 
-    // Check size before compression just in case
-    if (file.size > 10 * 1024 * 1024) {
-      setErrors(prev => ({ ...prev, image: 'File size too large (max 10MB)' }));
+    if (files.some(file => file.size > 10 * 1024 * 1024)) {
+      setErrors(prev => ({ ...prev, image: 'One or more files too large (max 10MB)' }));
       return;
     }
 
     try {
       setIsCompressing(true);
       setErrors(prev => ({ ...prev, image: undefined }));
-      const options = {
-        maxSizeMB: 0.8,
-        maxWidthOrHeight: 1920,
-        useWebWorker: true,
-      };
+      const options = { maxSizeMB: 0.8, maxWidthOrHeight: 1920, useWebWorker: true };
       
-      const compressedFile = await imageCompression(file, options);
+      const compressedFiles = await Promise.all(files.map(file => imageCompression(file, options)));
+      const newImages = compressedFiles.map(f => ({
+        url: URL.createObjectURL(f),
+        file: f
+      }));
       
       setForm(prev => ({ 
         ...prev, 
-        imageFile: compressedFile,
-        imageUrl: URL.createObjectURL(compressedFile) // Local preview
+        previewImages: [...(prev.previewImages || []), ...newImages]
       }));
       setIsCompressing(false);
     } catch (error) {
@@ -91,6 +87,15 @@ export default function ProductModal({ isOpen, product, onSave, onClose, isSavin
       setErrors(prev => ({ ...prev, image: 'Image compression failed' }));
       setIsCompressing(false);
     }
+    
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  }
+
+  function removeImage(index) {
+    setForm(prev => ({
+      ...prev,
+      previewImages: prev.previewImages.filter((_, i) => i !== index)
+    }));
   }
 
   async function handleSubmit(e) {
@@ -98,31 +103,27 @@ export default function ProductModal({ isOpen, product, onSave, onClose, isSavin
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     
-    let finalImageUrl = form.imageUrl;
-    
-    if (form.imageFile) {
-      try {
-        setIsUploading(true);
-        finalImageUrl = await uploadImage(form.imageFile);
-      } catch (err) {
-        setIsUploading(false);
-        setErrors(prev => ({ ...prev, image: 'Failed to upload image' }));
-        return;
-      }
-    }
-    
-    // Copy form to omit imageFile
-    const { imageFile, ...formToSave } = form;
-    
-    onSave({
-      ...(isEditing ? { id: product.id, createdAt: product.createdAt } : {}),
-      ...formToSave,
-      imageUrl: finalImageUrl,
-      price: Number(form.price),
-    });
-    
-    if (form.imageFile) {
+    try {
+      setIsUploading(true);
+      const finalUrls = await Promise.all(form.previewImages.map(async (img) => {
+        if (img.file) {
+          return await uploadImage(img.file);
+        }
+        return img.url;
+      }));
+      
+      const { previewImages, ...formToSave } = form;
+      
+      onSave({
+        ...(isEditing ? { id: product.id, createdAt: product.createdAt } : {}),
+        ...formToSave,
+        imageUrl: finalUrls.join(','),
+        price: Number(form.price),
+      });
       setIsUploading(false);
+    } catch (err) {
+      setIsUploading(false);
+      setErrors(prev => ({ ...prev, image: 'Failed to upload images' }));
     }
   }
 
@@ -145,9 +146,18 @@ export default function ProductModal({ isOpen, product, onSave, onClose, isSavin
         {/* Body */}
         <form className="modal-form" onSubmit={handleSubmit}>
           {/* Image preview */}
-          {form.imageUrl && (
-            <div className="modal-image-preview">
-              <img src={form.imageUrl} alt="Product preview" onError={(e) => e.target.style.display = 'none'} />
+          {form.previewImages && form.previewImages.length > 0 && (
+            <div className="modal-image-preview" style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '8px', alignItems: 'center' }}>
+              {form.previewImages.map((img, idx) => (
+                <div key={idx} style={{ position: 'relative', flexShrink: 0 }}>
+                  <img src={img.url} alt={`Preview ${idx + 1}`} onError={(e) => e.target.style.display = 'none'} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />
+                  <button type="button" onClick={() => removeImage(idx)} style={{ position: 'absolute', top: '-6px', right: '-6px', background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>×</button>
+                </div>
+              ))}
+              <button type="button" onClick={() => fileInputRef.current?.click()} style={{ width: '80px', height: '80px', borderRadius: '4px', border: '1px dashed rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.05)', color: 'white', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: '12px', flexShrink: 0 }}>
+                <span style={{ fontSize: '24px', marginBottom: '4px' }}>+</span>
+                Add More
+              </button>
             </div>
           )}
 
@@ -215,13 +225,15 @@ export default function ProductModal({ isOpen, product, onSave, onClose, isSavin
                 id="modal-image-file"
                 className={`form-input${errors.image ? ' form-input--error' : ''}`}
                 type="file"
+                multiple
                 accept=".jpg,.jpeg,.png,.webp"
                 onChange={handleImageChange}
                 disabled={isCompressing || isSaving || isUploading}
+                style={{ display: form.previewImages.length > 0 ? 'none' : 'block' }}
               />
               {errors.image && <span className="form-error">{errors.image}</span>}
               {isCompressing && <span className="form-hint" style={{ color: '#0ea5e9', fontSize: '0.85rem', marginTop: '4px', display: 'block' }}>Compressing image...</span>}
-              {!isCompressing && !errors.image && <span className="form-hint" style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '4px', display: 'block' }}>Max 10MB (JPG, PNG, WEBP)</span>}
+              {!isCompressing && !errors.image && form.previewImages.length === 0 && <span className="form-hint" style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '4px', display: 'block' }}>Max 10MB (JPG, PNG, WEBP)</span>}
             </div>
           </div>
 
