@@ -68,10 +68,12 @@ function getSheet() {
 
 // Row → object
 function rowToProduct(row) {
+  var imagesStr = row[2] || '';
   return {
     id: row[0] ? String(row[0]) : '',
     imageId: row[1] || '',
-    imageUrl: row[2] || '',
+    imageUrl: imagesStr,
+    imageUrls: imagesStr ? String(imagesStr).split(',').filter(Boolean) : [],
     name: row[3] || '',
     category: row[4] || '',
     description: row[5] || '',
@@ -82,10 +84,12 @@ function rowToProduct(row) {
 }
 
 function rowToGlobalProduct(row) {
+  var imagesStr = row[2] || '';
   return {
     id: row[0] ? String(row[0]) : '',
     name: row[1] || '',
-    imageUrl: row[2] || '',
+    imageUrl: imagesStr,
+    imageUrls: imagesStr ? String(imagesStr).split(',').filter(Boolean) : [],
     productUrl: row[3] || '',
     storeName: row[4] || '',
     featured: row[5] === true || row[5] === 'TRUE' || row[5] === 'true',
@@ -94,10 +98,12 @@ function rowToGlobalProduct(row) {
 }
 
 function rowToPortfolioItem(row) {
+  var imagesStr = row[2] || '';
   return {
     id: row[0] ? String(row[0]) : '',
     title: row[1] || '',
-    imageUrl: row[2] || '',
+    imageUrl: imagesStr,
+    imageUrls: imagesStr ? String(imagesStr).split(',').filter(Boolean) : [],
     category: row[3] || '',
     description: row[4] || '',
     featured: row[5] === true || row[5] === 'TRUE' || row[5] === 'true',
@@ -278,6 +284,9 @@ function doPost(e) {
       
       var finalImageId = '';
       var finalImageUrl = body.imageUrl || '';
+      if (body.imageUrls && Array.isArray(body.imageUrls)) {
+        finalImageUrl = body.imageUrls.join(',');
+      }
       
       sheet.appendRow([
         newId,
@@ -299,6 +308,7 @@ function doPost(e) {
           id: newId,
           imageId: finalImageId,
           imageUrl: finalImageUrl,
+          imageUrls: finalImageUrl ? finalImageUrl.split(',').filter(Boolean) : [],
           name: body.name,
           category: body.category,
           description: body.description,
@@ -333,6 +343,9 @@ function doPost(e) {
       
       var finalImageId = existingImageId;
       var finalImageUrl = body.imageUrl || '';
+      if (body.imageUrls && Array.isArray(body.imageUrls)) {
+        finalImageUrl = body.imageUrls.join(',');
+      }
 
       // Update columns B-I (imageId, imageUrl, name, category, description, price, featured)
       // Actually B is 2, C is 3, D is 4, E is 5, F is 6, G is 7, H is 8
@@ -346,7 +359,15 @@ function doPost(e) {
 
       clearProductsCache();
 
-      return jsonResponse({ success: true, data: { id: body.id, imageId: finalImageId, imageUrl: finalImageUrl } });
+      return jsonResponse({ 
+        success: true, 
+        data: { 
+          id: body.id, 
+          imageId: finalImageId, 
+          imageUrl: finalImageUrl,
+          imageUrls: finalImageUrl ? finalImageUrl.split(',').filter(Boolean) : []
+        } 
+      });
     }
 
     // ── DELETE /products — Delete ────────────────────────
@@ -394,10 +415,15 @@ function doPost(e) {
       var newId = Utilities.getUuid();
       var now = new Date().toISOString();
       
+      var finalImageUrl = body.imageUrl || '';
+      if (body.imageUrls && Array.isArray(body.imageUrls)) {
+        finalImageUrl = body.imageUrls.join(',');
+      }
+      
       sheet.appendRow([
         newId,
         body.name || '',
-        body.imageUrl || '',
+        finalImageUrl,
         body.productUrl || '',
         body.storeName || '',
         body.featured ? 'TRUE' : 'FALSE',
@@ -408,7 +434,8 @@ function doPost(e) {
         data: {
           id: newId,
           name: body.name,
-          imageUrl: body.imageUrl,
+          imageUrl: finalImageUrl,
+          imageUrls: finalImageUrl ? finalImageUrl.split(',').filter(Boolean) : [],
           productUrl: body.productUrl,
           storeName: body.storeName,
           featured: body.featured,
@@ -436,13 +463,26 @@ function doPost(e) {
         return jsonResponse({ success: false, error: 'Global Product not found' }, 404);
       }
       
+      var finalImageUrl = body.imageUrl || '';
+      if (body.imageUrls && Array.isArray(body.imageUrls)) {
+        finalImageUrl = body.imageUrls.join(',');
+      }
+      
       sheet.getRange(rowIndex, 2).setValue(body.name || '');
-      sheet.getRange(rowIndex, 3).setValue(body.imageUrl || '');
+      sheet.getRange(rowIndex, 3).setValue(finalImageUrl);
       sheet.getRange(rowIndex, 4).setValue(body.productUrl || '');
       sheet.getRange(rowIndex, 5).setValue(body.storeName || '');
       sheet.getRange(rowIndex, 6).setValue(body.featured ? 'TRUE' : 'FALSE');
 
-      return jsonResponse({ success: true, data: { id: body.id, name: body.name } });
+      return jsonResponse({ 
+        success: true, 
+        data: { 
+          id: body.id, 
+          name: body.name,
+          imageUrl: finalImageUrl,
+          imageUrls: finalImageUrl ? finalImageUrl.split(',').filter(Boolean) : []
+        } 
+      });
     }
 
     if (action === 'deleteGlobalProduct') {
@@ -484,10 +524,15 @@ function doPost(e) {
       var newId = Utilities.getUuid();
       var now = new Date().toISOString();
       
+      var finalImageUrl = body.imageUrl || '';
+      if (body.imageUrls && Array.isArray(body.imageUrls)) {
+        finalImageUrl = body.imageUrls.join(',');
+      }
+      
       sheet.appendRow([
         newId,
         body.title || '',
-        body.imageUrl || '',
+        finalImageUrl,
         body.category || '',
         body.description || '',
         body.featured ? 'TRUE' : 'FALSE',
@@ -498,7 +543,8 @@ function doPost(e) {
         data: {
           id: newId,
           title: body.title,
-          imageUrl: body.imageUrl,
+          imageUrl: finalImageUrl,
+          imageUrls: finalImageUrl ? finalImageUrl.split(',').filter(Boolean) : [],
           category: body.category,
           description: body.description,
           featured: body.featured,
@@ -526,13 +572,26 @@ function doPost(e) {
         return jsonResponse({ success: false, error: 'Portfolio Item not found' }, 404);
       }
       
+      var finalImageUrl = body.imageUrl || '';
+      if (body.imageUrls && Array.isArray(body.imageUrls)) {
+        finalImageUrl = body.imageUrls.join(',');
+      }
+      
       sheet.getRange(rowIndex, 2).setValue(body.title || '');
-      sheet.getRange(rowIndex, 3).setValue(body.imageUrl || '');
+      sheet.getRange(rowIndex, 3).setValue(finalImageUrl);
       sheet.getRange(rowIndex, 4).setValue(body.category || '');
       sheet.getRange(rowIndex, 5).setValue(body.description || '');
       sheet.getRange(rowIndex, 6).setValue(body.featured ? 'TRUE' : 'FALSE');
 
-      return jsonResponse({ success: true, data: { id: body.id, title: body.title } });
+      return jsonResponse({ 
+        success: true, 
+        data: { 
+          id: body.id, 
+          title: body.title,
+          imageUrl: finalImageUrl,
+          imageUrls: finalImageUrl ? finalImageUrl.split(',').filter(Boolean) : []
+        } 
+      });
     }
 
     if (action === 'deletePortfolioItem') {
