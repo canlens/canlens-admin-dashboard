@@ -98,7 +98,7 @@ export default function DashboardPage() {
                   <p className="recent-product-name">{product.name}</p>
                   <p className="recent-product-meta">
                     <span className="badge">{product.category}</span>
-                    <span className="recent-product-price">${Number(product.price).toFixed(2)}</span>
+                    <span className="recent-product-price">{Number(product.price).toLocaleString()} RWF</span>
                   </p>
                 </div>
                 {product.featured && (
